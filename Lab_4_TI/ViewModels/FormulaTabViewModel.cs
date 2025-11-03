@@ -27,6 +27,8 @@ namespace Lab_4_TI.ViewModels
 
         public ICommand KomandaRazobratIVichislit => new RelayCommand(_ => RazobratIVichislit());
         public ICommand KomandaSkopirovat => new RelayCommand(_ => SkopirovatVBufer());
+        public ICommand KomandaPreset1 => new RelayCommand(_ => ZagruzitPreset1());
+        public ICommand KomandaPreset2 => new RelayCommand(_ => ZagruzitPreset2());
 
         private void RazobratIVichislit()
         {
@@ -40,8 +42,15 @@ namespace Lab_4_TI.ViewModels
 
                 var lekser = new Lexer(TekstFormuli);
                 var tokeni = lekser.Tokenize().ToList();
+                
+                // Отладочный вывод
+                var tokeniStr = string.Join(" ", tokeni.Select(t => t.Tekst));
+                
                 var obramnayaZapis = ParserRpn.VObramnuyuPolskuyuZapis(tokeni);
                 var peremennie = Evaluator.PoluchitPeremennie(obramnayaZapis);
+                
+                // Отладочный вывод ОПЗ
+                var opzStr = string.Join(" ", obramnayaZapis.Select(t => t.Tekst));
 
                 if (peremennie.Count > 8)
                 {
@@ -50,7 +59,9 @@ namespace Lab_4_TI.ViewModels
 
                 var tablitsa = TruthTable.IzFunktsii(obramnayaZapis, peremennie);
 
-                TekstResultata = $"Таблица истинности для формулы: {TekstFormuli}\n\n";
+                TekstResultata = $"Таблица истинности для формулы: {TekstFormuli}\n";
+                TekstResultata += $"Лексемы: {tokeniStr}\n";
+                TekstResultata += $"ОПЗ: {opzStr}\n\n";
                 TekstResultata += TruthTable.TablitsaVStroku(tablitsa, peremennie);
 
                 var sdnf = DnfKnfGenerator.VSDNF(tablitsa, peremennie);
@@ -79,9 +90,21 @@ namespace Lab_4_TI.ViewModels
             }
         }
 
+        private void ZagruzitPreset1()
+        {
+            TekstFormuli = "(x1 & !x2) | x3";
+            RazobratIVichislit();
+        }
+
+        private void ZagruzitPreset2()
+        {
+            TekstFormuli = "(x1 | x2) -> x3";
+            RazobratIVichislit();
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void NaSvoystvoIzmenilos([CallerMemberName] string imyaSvoystva = null)
+        protected virtual void NaSvoystvoIzmenilos([CallerMemberName] string? imyaSvoystva = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(imyaSvoystva));
         }

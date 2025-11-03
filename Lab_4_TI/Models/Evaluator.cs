@@ -28,18 +28,22 @@ namespace Lab_4_TI.Models
                         break;
 
                     case TokenType.Ne:
-                        if (stek.Count < 1) throw new Exception("Некорректное выражение");
+                        if (stek.Count < 1) throw new Exception("Некорректное выражение - недостаточно операндов для !");
                         stek.Push(!stek.Pop());
                         break;
 
                     case TokenType.I:
-                        if (stek.Count < 2) throw new Exception("Некорректное выражение");
-                        stek.Push(stek.Pop() && stek.Pop());
+                        if (stek.Count < 2) throw new Exception("Некорректное выражение - недостаточно операндов для &");
+                        var praviy1 = stek.Pop();
+                        var leviy1 = stek.Pop();
+                        stek.Push(leviy1 && praviy1);
                         break;
 
                     case TokenType.Ili:
-                        if (stek.Count < 2) throw new Exception("Некорректное выражение");
-                        stek.Push(stek.Pop() || stek.Pop());
+                        if (stek.Count < 2) throw new Exception("Некорректное выражение - недостаточно операндов для |");
+                        var praviy2 = stek.Pop();
+                        var leviy2 = stek.Pop();
+                        stek.Push(leviy2 || praviy2);
                         break;
 
                     default:
@@ -48,7 +52,7 @@ namespace Lab_4_TI.Models
             }
 
             if (stek.Count != 1)
-                throw new Exception("Некорректное выражение");
+                throw new Exception($"Некорректное выражение - осталось {stek.Count} элементов в стеке вместо 1");
 
             return stek.Pop();
         }

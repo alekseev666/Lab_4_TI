@@ -36,6 +36,7 @@ namespace Lab_4_TI.ViewModels
         public ICommand KomandaPostroitSDNF => new RelayCommand(_ => PostroitSDNF());
         public ICommand KomandaPostroitSKNF => new RelayCommand(_ => PostroitSKNF());
         public ICommand KomandaSkopirovat => new RelayCommand(_ => SkopirovatVBufer());
+        public ICommand KomandaPreset1 => new RelayCommand(_ => ZagruzitPreset1());
 
         private void PredupreditOBolshomRazmere()
         {
@@ -130,9 +131,16 @@ namespace Lab_4_TI.ViewModels
             }
         }
 
+        private void ZagruzitPreset1()
+        {
+            N = 3;
+            TekstNomera = "11";
+            PostroitTablitsu();
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void NaSvoystvoIzmenilos([CallerMemberName] string imyaSvoystva = null)
+        protected virtual void NaSvoystvoIzmenilos([CallerMemberName] string? imyaSvoystva = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(imyaSvoystva));
         }

@@ -13,51 +13,76 @@
         <vm:CompareTabViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="8">
+    <Grid Margin="12">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{StaticResource CardPanel}">
+            <StackPanel>
+                <TextBlock Text="Сравнение двух функций" Style="{StaticResource HeaderText}"/>
+                
+                <StackPanel Margin="0,8,0,0">
+                    <TextBlock Text="Левая функция:" Style="{StaticResource ModernLabel}" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding LeviyVvod, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ModernTextBox}"
+                             ToolTip="Введите формулу или номер (n=3,номер=11)"
+                             Margin="0,0,0,12" />
+                    
+              
+                    <TextBlock Text="Правая функция:" Style="{StaticResource ModernLabel}" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding PraviyVvod, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ModernTextBox}"
+                             ToolTip="Введите формулу или номер (n=3,номер=11)"
+                             Margin="0,0,0,12" />
+                </StackPanel>
+                
+                <Button Content="Эквивалентны?"
+                        Command="{Binding KomandaSravnit}"
+                        Style="{StaticResource ModernButton}"
+                        HorizontalAlignment="Center"
+                        Padding="24,10" />
+            </StackPanel>
+        </Border>
 
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,0,0,8">
-            <TextBox Width="380"
-                     Text="{Binding LeviyVvod, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="Введите формулу или номер (n=3,номер=11)" />
-            <TextBlock Text="   vs   "
-                       VerticalAlignment="Center"
-                       FontWeight="Bold" />
-            <TextBox Width="380"
-                     Text="{Binding PraviyVvod, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="Введите формулу или номер (n=3,номер=11)" />
-            <Button Content="Эквивалентны?"
-                    Command="{Binding KomandaSravnit}"
-                    Margin="6,0,0,0" />
-        </StackPanel>
-
-        <TextBlock Grid.Row="1"
-                   Text="Формат: формула (x1 &amp; x2) или номер (n=3,номер=11)"
-                   TextWrapping="Wrap"
-                   FontStyle="Italic"
-                   Margin="0,0,0,8" />
-
-        <ScrollViewer Grid.Row="2"
-                      VerticalScrollBarVisibility="Auto">
-            <TextBox Text="{Binding TekstResultata}"
-                     IsReadOnly="True"
-                     AcceptsReturn="True"
-                     TextWrapping="Wrap"
-                     FontFamily="Consolas"
-                     BorderThickness="0" />
-        </ScrollViewer>
-
-        <Button Grid.Row="3"
+        <Border Grid.Row="1"
+                Style="{StaticResource CardPanel}">
+            <StackPanel>
+                <TextBlock Text="Пресеты"
+                           Style="{StaticResource HeaderText}"
+                           FontSize="14" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Пример 1: n=3,номер=11 vs n=3,номер=11"
+                            Command="{Binding KomandaPreset1}"
+                            Style="{StaticResource PresetButton}" />
+                    <Button Content="Пример 2: формула vs её СДНФ"
+                            Command="{Binding KomandaPreset2}"
+                            Style="{StaticResource PresetButton}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <TextBlock Grid.Row="2"
+                   Text="Формат: формула (x1 &amp; x2) или номер (n=3,номер=11 / n=3,nomer=11)"
+                   Style="{StaticResource HintText}"
+                   Margin="8" />
+        <Border Grid.Row="3"
+                Style="{StaticResource CardPanel}">
+            <ScrollViewer Style="{StaticResource ModernScrollViewer}">
+                <TextBox Text="{Binding TekstResultata}"
+                         Style="{StaticResource ResultTextBox}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         MinHeight="200" />
+            </ScrollViewer>
+        </Border>
+        <Button Grid.Row="4"
                 Content="Копировать в буфер"
                 Command="{Binding KomandaSkopirovat}"
+                Style="{StaticResource CopyButton}"
                 HorizontalAlignment="Right"
-                Margin="0,8,0,0"
-                Width="120" />
+                Margin="0,8,0,0" />
     </Grid>
 </UserControl>

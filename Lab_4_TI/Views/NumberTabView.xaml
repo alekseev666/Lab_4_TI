@@ -12,58 +12,81 @@
         <vm:NumberTabViewModel />
     </UserControl.DataContext>
 
-    <Grid Margin="8">
+    <Grid Margin="12">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,0,0,8">
-            <TextBlock Text="n:"
-                       VerticalAlignment="Center"
-                       Margin="0,0,6,0" />
-            <TextBox Width="60"
-                     Text="{Binding N, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="номер:"
-                       Margin="10,0,6,0"
-                       VerticalAlignment="Center" />
-            <TextBox Width="200"
-                     Text="{Binding TekstNomera, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Content="Таблица истинности"
-                    Command="{Binding KomandaPostroitTablitsu}"
-                    Margin="10,0,6,0" />
-            <Button Content="СДНФ"
-                    Command="{Binding KomandaPostroitSDNF}"
-                    Margin="6,0,6,0" />
-            <Button Content="СКНФ"
-                    Command="{Binding KomandaPostroitSKNF}"
-                    Margin="6,0,0,0" />
-        </StackPanel>
-
-        <TextBlock Grid.Row="1"
-                   Text="(Пояснение: бит i(номера) соответствует кортежу с индексом i; индексация от 0..2^n-1; кортежи перечислены от 0->..->2^n-1 как x1..xn)"
-                   TextWrapping="Wrap"
-                   FontStyle="Italic"
-                   Margin="0,0,0,8" />
-
-        <ScrollViewer Grid.Row="2"
-                      VerticalScrollBarVisibility="Auto">
-            <TextBox Text="{Binding TekstResultata}"
-                     AcceptsReturn="True"
-                     IsReadOnly="True"
-                     TextWrapping="Wrap"
-                     FontFamily="Consolas"
-                     BorderThickness="0" />
-        </ScrollViewer>
-
-        <Button Grid.Row="3"
+        <Border Grid.Row="0"
+                Style="{StaticResource CardPanel}">
+            <StackPanel>
+                <TextBlock Text="Задание функции по номеру"
+                           Style="{StaticResource HeaderText}" />
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,8,0,0">
+                    <TextBlock Text="n:"
+                               Style="{StaticResource ModernLabel}" />
+                    <TextBox Width="80"
+                             Text="{Binding N, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ModernTextBox}"
+                             Margin="0,0,16,0" />
+                    <TextBlock Text="номер:"
+                               Style="{StaticResource ModernLabel}" />
+                    <TextBox Width="220"
+                             Text="{Binding TekstNomera, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ModernTextBox}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,12,0,0">
+                    <Button Content="Таблица истинности"
+                            Command="{Binding KomandaPostroitTablitsu}"
+                            Style="{StaticResource ModernButton}"
+                            Margin="0,0,8,0" />
+                    <Button Content="∨ СДНФ"
+                            Command="{Binding KomandaPostroitSDNF}"
+                            Style="{StaticResource ModernButton}"
+                            Margin="0,0,8,0" />
+                    <Button Content="∧ СКНФ"
+                            Command="{Binding KomandaPostroitSKNF}"
+                            Style="{StaticResource ModernButton}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1"
+                Style="{StaticResource CardPanel}">
+            <StackPanel>
+                <TextBlock Text="Пресеты"
+                           Style="{StaticResource HeaderText}"
+                           FontSize="14" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Пример 1: n=3, номер=11"
+                            Command="{Binding KomandaPreset1}"
+                            Style="{StaticResource PresetButton}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <TextBlock Grid.Row="2"
+                   Text="Пояснение: бит i(номера) соответствует кортежу с индексом i; индексация от 0..2^n-1; кортежи перечислены от 0->...->2^n-1 как x1..xn"
+                   Style="{StaticResource HintText}"
+                   Margin="8" />
+        <Border Grid.Row="3"
+                Style="{StaticResource CardPanel}">
+            <ScrollViewer Style="{StaticResource ModernScrollViewer}">
+                <TextBox Text="{Binding TekstResultata}"
+                         Style="{StaticResource ResultTextBox}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         MinHeight="200" />
+            </ScrollViewer>
+        </Border>
+        <Button Grid.Row="4"
                 Content="Копировать в буфер"
                 Command="{Binding KomandaSkopirovat}"
+                Style="{StaticResource CopyButton}"
                 HorizontalAlignment="Right"
-                Margin="0,8,0,0"
-                Width="120" />
+                Margin="0,8,0,0" />
     </Grid>
 </UserControl>

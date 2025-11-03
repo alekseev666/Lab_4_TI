@@ -8,52 +8,76 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-
     <UserControl.DataContext>
         <vm:FormulaTabViewModel />
     </UserControl.DataContext>
-
-    <Grid Margin="8">
+    <Grid Margin="12">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+                Style="{StaticResource CardPanel}">
+            <StackPanel>
+                <TextBlock Text="Задание функции по формуле"
+                           Style="{StaticResource HeaderText}" />
 
-        <StackPanel Orientation="Horizontal"
-                    Margin="0,0,0,8">
-            <TextBlock Text="Формула:"
-                       VerticalAlignment="Center"
-                       Margin="0,0,6,0" />
-            <TextBox Width="520"
-                     Text="{Binding TekstFormuli, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Content="Разобрать и вычислить"
-                    Command="{Binding KomandaRazobratIVichislit}"
-                    Margin="6,0,0,0" />
-        </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,8,0,0">
+                    <TextBlock Text="Формула:"
+                               Style="{StaticResource ModernLabel}"
+                               Margin="0,0,8,0" />
+                    <TextBox Width="600"
+                             Text="{Binding TekstFormuli, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ModernTextBox}"
+                             Margin="0,0,12,0" />
+                </StackPanel>
 
-        <TextBlock Grid.Row="1"
-                   Text="Озвучка: ! / not — НЕ; &amp; / and — И; | / or — ИЛИ; ^ — XOR; -&gt; — импликация; = — эквиваленция"
-                   TextWrapping="Wrap"
-                   FontStyle="Italic"
-                   Margin="0,0,0,8" />
-
-        <ScrollViewer Grid.Row="2"
-                      VerticalScrollBarVisibility="Auto">
-            <TextBox Text="{Binding TekstResultata}"
-                     IsReadOnly="True"
-                     AcceptsReturn="True"
-                     TextWrapping="Wrap"
-                     FontFamily="Consolas"
-                     BorderThickness="0" />
-        </ScrollViewer>
-
-        <Button Grid.Row="3"
+                <Button Content="▶ Разобрать и вычислить"
+                        Command="{Binding KomandaRazobratIVichislit}"
+                        Style="{StaticResource ModernButton}"
+                        HorizontalAlignment="Left"
+                        Margin="0,12,0,0" />
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1"
+                Style="{StaticResource CardPanel}">
+            <StackPanel>
+                <TextBlock Text="Пресеты"
+                           Style="{StaticResource HeaderText}"
+                           FontSize="14" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Пример 1: (x1 &amp; !x2) | x3"
+                            Command="{Binding KomandaPreset1}"
+                            Style="{StaticResource PresetButton}" />
+                    <Button Content="Пример 2: (x1 | x2) -&gt; x3"
+                            Command="{Binding KomandaPreset2}"
+                            Style="{StaticResource PresetButton}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <TextBlock Grid.Row="2"
+                   Text=" Озвучка: ! / not — НЕ (¬); &amp; / and — И (∧); | / or — ИЛИ (∨); ^ — XOR (⊕); -> — импликация (→); = — эквиваленция (↔)"
+                   Style="{StaticResource HintText}"
+                   Margin="8" />
+        <Border Grid.Row="3"
+                Style="{StaticResource CardPanel}">
+            <ScrollViewer Style="{StaticResource ModernScrollViewer}">
+                <TextBox Text="{Binding TekstResultata}"
+                         Style="{StaticResource ResultTextBox}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         MinHeight="200" />
+            </ScrollViewer>
+        </Border>
+        <Button Grid.Row="4"
                 Content="Копировать в буфер"
                 Command="{Binding KomandaSkopirovat}"
+                Style="{StaticResource CopyButton}"
                 HorizontalAlignment="Right"
-                Margin="0,8,0,0"
-                Width="120" />
+                Margin="0,8,0,0" />
     </Grid>
 </UserControl>

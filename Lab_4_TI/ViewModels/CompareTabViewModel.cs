@@ -36,6 +36,8 @@ namespace Lab_4_TI.ViewModels
 
         public ICommand KomandaSravnit => new RelayCommand(_ => Sravnit());
         public ICommand KomandaSkopirovat => new RelayCommand(_ => SkopirovatVBufer());
+        public ICommand KomandaPreset1 => new RelayCommand(_ => ZagruzitPreset1());
+        public ICommand KomandaPreset2 => new RelayCommand(_ => ZagruzitPreset2());
 
         private void Sravnit()
         {
@@ -92,12 +94,16 @@ namespace Lab_4_TI.ViewModels
         {
             if (vvod.StartsWith("n="))
             {
-                var chasti = vvod.Split(new[] { '=', ',' }, StringSplitOptions.RemoveEmptyEntries);
-                if (chasti.Length >= 3 && int.TryParse(chasti[1], out int n) && ulong.TryParse(chasti[3], out ulong nomer))
+                // Поддержка форматов: "n=3,номер=11" или "n=3,nomer=11"
+                // Удаляем все варианты слова "номер"
+                var ochistchenniy = vvod.Replace("номер=", "").Replace("nomer=", "").Replace("num=", "").Replace("n=", "");
+                // Теперь у нас строка типа "3,11" или "3, 11"
+                var chasti = ochistchenniy.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (chasti.Length >= 2 && int.TryParse(chasti[0].Trim(), out int n) && ulong.TryParse(chasti[1].Trim(), out ulong nomer))
                 {
                     return TruthTable.IzNomera(n, nomer);
                 }
-                throw new Exception("Неверный формат номера функции. Используйте: n=3,nomer=11");
+                throw new Exception($"Неверный формат номера функции. Получено: '{vvod}'. Используйте: n=3,номер=11 или n=3,nomer=11");
             }
             else
             {
@@ -113,8 +119,10 @@ namespace Lab_4_TI.ViewModels
         {
             if (vvod.StartsWith("n="))
             {
-                var chasti = vvod.Split(new[] { '=', ',' }, StringSplitOptions.RemoveEmptyEntries);
-                if (chasti.Length >= 3 && int.TryParse(chasti[1], out int n) && ulong.TryParse(chasti[3], out ulong nomer))
+                // Поддержка форматов: "n=3,номер=11" или "n=3,nomer=11"
+                var ochistchenniy = vvod.Replace("номер=", "").Replace("nomer=", "").Replace("num=", "").Replace("n=", "");
+                var chasti = ochistchenniy.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (chasti.Length >= 2 && int.TryParse(chasti[0].Trim(), out int n) && ulong.TryParse(chasti[1].Trim(), out ulong nomer))
                 {
                     int indeks = 0;
                     var uporyadochenniePeremennie = Enumerable.Range(1, n).Select(i => $"x{i}").ToList();
@@ -147,9 +155,27 @@ namespace Lab_4_TI.ViewModels
             }
         }
 
+        private void ZagruzitPreset1()
+        {
+            // Сравнение одинаковых функций по номерам
+            LeviyVvod = "n=3,номер=11";
+            PraviyVvod = "n=3,номер=11";
+            Sravnit();
+        }
+
+        private void ZagruzitPreset2()
+        {
+            // Сравнение формулы с её СДНФ
+            LeviyVvod = "(x1 & !x2) | x3";
+            // СДНФ для (x1 & !x2) | x3: 
+            // f=1 при: 001,010,011,100,101,110,111 = номер с битами в этих позициях
+            PraviyVvod = "(!x1 & !x2 & x3) | (!x1 & x2 & !x3) | (!x1 & x2 & x3) | (x1 & !x2 & !x3) | (x1 & !x2 & x3) | (x1 & x2 & !x3) | (x1 & x2 & x3)";
+            Sravnit();
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void NaSvoystvoIzmenilos([CallerMemberName] string imyaSvoystva = null)
+        protected virtual void NaSvoystvoIzmenilos([CallerMemberName] string? imyaSvoystva = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(imyaSvoystva));
         }

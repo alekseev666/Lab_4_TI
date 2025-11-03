@@ -1,0 +1,176 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Цветовая палитра -->
+    <SolidColorBrush x:Key="PrimaryGreen" Color="#2E7D32"/>
+    <SolidColorBrush x:Key="LightGreen" Color="#66BB6A"/>
+    <SolidColorBrush x:Key="DarkGreen" Color="#1B5E20"/>
+    <SolidColorBrush x:Key="AccentTeal" Color="#26A69A"/>
+    <SolidColorBrush x:Key="LightTeal" Color="#4DB6AC"/>
+    <SolidColorBrush x:Key="BackgroundLight" Color="#F1F8F4"/>
+    <SolidColorBrush x:Key="SurfaceWhite" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TextPrimary" Color="#212121"/>
+    <SolidColorBrush x:Key="TextSecondary" Color="#757575"/>
+    <SolidColorBrush x:Key="BorderColor" Color="#C8E6C9"/>
+    <SolidColorBrush x:Key="HoverGreen" Color="#43A047"/>
+
+    <!-- Градиенты -->
+    <LinearGradientBrush x:Key="GreenGradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#2E7D32" Offset="0"/>
+        <GradientStop Color="#66BB6A" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TealGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#26A69A" Offset="0"/>
+        <GradientStop Color="#4DB6AC" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#E8F5E9" Offset="0"/>
+        <GradientStop Color="#F1F8F4" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- Стиль для окна -->
+    <Style x:Key="ModernWindow" TargetType="Window">
+        <Setter Property="Background" Value="{StaticResource BackgroundGradient}"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+    </Style>
+
+    <!-- Стиль для кнопок -->
+    <Style x:Key="ModernButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryGreen}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="6"
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource HoverGreen}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource DarkGreen}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Стиль для кнопок пресетов -->
+    <Style x:Key="PresetButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+        <Setter Property="Background" Value="{StaticResource AccentTeal}"/>
+        <Setter Property="Padding" Value="12,6"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="4,0"/>
+    </Style>
+
+    <!-- Стиль для кнопки копирования -->
+    <Style x:Key="CopyButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+        <Setter Property="Background" Value="{StaticResource LightGreen}"/>
+    </Style>
+
+    <!-- Стиль для TextBox -->
+    <Style x:Key="ModernTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource SurfaceWhite}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource PrimaryGreen}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource LightGreen}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Стиль для readonly TextBox (результаты) -->
+    <Style x:Key="ResultTextBox" TargetType="TextBox" BasedOn="{StaticResource ModernTextBox}">
+        <Setter Property="Background" Value="#FAFAFA"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="FontFamily" Value="Consolas"/>
+    </Style>
+
+    <!-- Стиль для TabControl -->
+    <Style x:Key="ModernTabControl" TargetType="TabControl">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <!-- Стиль для TextBlock заголовков -->
+    <Style x:Key="HeaderText" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryGreen}"/>
+        <Setter Property="Margin" Value="0,0,0,8"/>
+    </Style>
+
+    <!-- Стиль для TextBlock подсказок -->
+    <Style x:Key="HintText" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontStyle" Value="Italic"/>
+        <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <!-- Стиль для Label -->
+    <Style x:Key="ModernLabel" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,0,8,0"/>
+    </Style>
+
+    <!-- Стиль для панелей -->
+    <Style x:Key="CardPanel" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SurfaceWhite}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="16"/>
+        <Setter Property="Margin" Value="0,8"/>
+        
+    </Style>
+
+    <!-- Стиль для ScrollViewer -->
+    <Style x:Key="ModernScrollViewer" TargetType="ScrollViewer">
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+
+</ResourceDictionary>
