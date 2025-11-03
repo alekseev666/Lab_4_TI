@@ -4,9 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab_4_TI"
+        xmlns:views="clr-namespace:Lab_4_TI.Views"
+        xmlns:vm="clr-namespace:Lab_4_TI.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="ЛР-4"
+        Height="600"
+        Width="900">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
 
+    <Grid Margin="10">
+        <TabControl>
+            <TabItem Header="По номеру">
+                <views:NumberTabView />
+            </TabItem>
+            <TabItem Header="По формуле">
+                <views:FormulaTabView />
+            </TabItem>
+            <TabItem Header="Сравнение">
+                <views:CompareTabView />
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
