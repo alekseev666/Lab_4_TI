@@ -10,6 +10,11 @@ namespace Lab_4_TI.Models
     /// </summary>
     public static class ParserRpn
     {
+        /// <summary>
+        /// Получает приоритет операции для разбора выражений
+        /// </summary>
+        /// <param name="tipTokena">Тип токена операции</param>
+        /// <returns>Приоритет операци (чем выше, тем раньше вычисляется)</returns>
         private static int PoluchitPrioritet(TokenType tipTokena)
         {
             return tipTokena switch
@@ -81,6 +86,9 @@ namespace Lab_4_TI.Models
             return RazvernutVBazise(vihod);
         }
 
+        /// <summary>
+        /// Разворачивает выражение в базисе {&, |, !}
+        /// </summary>
         private static List<Token> RazvernutVBazise(List<Token> obramnayaZapis)
         {
             var stek = new Stack<List<Token>>();
@@ -122,6 +130,7 @@ namespace Lab_4_TI.Models
             return stek.Pop();
         }
 
+        // Создаем конъюнкцию
         private static List<Token> SozdatI_Virazhenie(List<Token> leviy, List<Token> praviy)
         {
             var resultat = new List<Token>();
@@ -131,6 +140,7 @@ namespace Lab_4_TI.Models
             return resultat;
         }
 
+        // Создаем дизъюнкцию
         private static List<Token> SozdatIli_Virazhenie(List<Token> leviy, List<Token> praviy)
         {
             var resultat = new List<Token>();
@@ -140,8 +150,10 @@ namespace Lab_4_TI.Models
             return resultat;
         }
 
+        // Создаем XOR: (a & !b) | (!a & b)
         private static List<Token> SozdatXorVirazhenie(List<Token> leviy, List<Token> praviy)
         {
+            // Отрицание операндов
             var neLeviy = new List<Token>(leviy) { new Token(TokenType.Ne, "!") };
             var nePraviy = new List<Token>(praviy) { new Token(TokenType.Ne, "!") };
 
@@ -163,6 +175,7 @@ namespace Lab_4_TI.Models
             return resultat;
         }
 
+        // Создаем импликацию: !a | b
         private static List<Token> SozdatImplikatsiyu(List<Token> leviy, List<Token> praviy)
         {
             var neLeviy = new List<Token>(leviy) { new Token(TokenType.Ne, "!") };
@@ -175,8 +188,10 @@ namespace Lab_4_TI.Models
             return resultat;
         }
 
+        // Создаем эквивалентность: (a & b) | (!a & !b)
         private static List<Token> SozdatEkvivalentnost(List<Token> leviy, List<Token> praviy)
         {
+            // Отрицания
             var neLeviy = new List<Token>(leviy) { new Token(TokenType.Ne, "!") };
             var nePraviy = new List<Token>(praviy) { new Token(TokenType.Ne, "!") };
 

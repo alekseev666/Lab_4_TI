@@ -15,8 +15,10 @@ namespace Lab_4_TI.Models
         /// </summary>
         public static bool Vichislit(List<Token> obramnayaZapis, Dictionary<string, bool> znacheniyaPeremennih)
         {
+            // Стек для вычисления ОПЗ
             var stek = new Stack<bool>();
 
+            // Проходим по токенам
             foreach (var token in obramnayaZapis)
             {
                 switch (token.Tip)

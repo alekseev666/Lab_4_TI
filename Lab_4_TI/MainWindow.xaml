@@ -30,6 +30,9 @@
             <TabItem Header="Сравнение" >
                 <views:CompareTabView />
             </TabItem>
+            <TabItem Header="Справка" >
+                <views:HelpTabView />
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

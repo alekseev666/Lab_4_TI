@@ -3,6 +3,9 @@ using System.Windows.Input;
 
 namespace Lab_4_TI.ViewModels
 {
+    /// <summary>
+    /// Команда для связывания с UI
+    /// </summary>
     public class RelayCommand : ICommand
     {
         readonly Action<object?> _vipolnit;

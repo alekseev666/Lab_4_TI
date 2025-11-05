@@ -1,1 +1,255 @@
-# Lab_4_TI
+# Лабораторная работа №4 - Логические функции
+
+## Суть проекта
+
+Это приложение для работы с логическими функциями. Программа позволяет:
+- Строить таблицы истинности по номеру функции или логическому выражению
+- Вычислять совершенную дизъюнктивную нормальную форму (СДНФ)
+- Вычислять совершенную конъюнктивную нормальную форму (СКНФ)
+- Сравнивать две логические формулы на эквивалентность
+- Подсчитывать стоимость формул (количество литералов, конъюнкций и дизъюнкций)
+
+## Как использовать
+
+### Вкладка "По номеру"
+1. Введите количество переменных (от 1 до 20)
+2. Введите номер функции
+3. Нажмите одну из кнопок:
+   - **Построить таблицу истинности** - показывает полную таблицу
+   - **Построить СДНФ** - генерирует дизъюнктивную нормальную форму
+   - **Построить СКНФ** - генерирует конъюнктивную нормальную форму
+
+### Вкладка "По формуле"
+1. Введите логическое выражение (например: `x1 & x2 | !x3`)
+2. Нажмите соответствующую кнопку для получения результата
+
+Поддерживаемые операции:
+- `!` или `NOT` - отрицание
+- `&` или `AND` - логическое И
+- `|` или `OR` - логическое ИЛИ
+- `^` или `XOR` - исключающее ИЛИ
+- `->` - импликация
+- `=` - эквивалентность
+
+### Вкладка "Сравнение"
+1. Введите две формулы
+2. Нажмите кнопку сравнения
+3. Программа покажет, эквивалентны ли формулы
+
+## Архитектура проекта
+
+Проект построен по паттерну MVVM (Model-View-ViewModel).
+
+### UML диаграмма классов (код для umlplanet)
+
+```
+@startuml
+package Models {
+  class Token {
+    +TokenType Tip
+    +string Tekst
+  }
+  
+  enum TokenType {
+    Peremennaya
+    Ne
+    I
+    Ili
+    Xor
+    Implikatsiya
+    Ekvivalentnost
+    LevaSkobka
+    PravaSkobka
+  }
+  
+  class Lexer {
+    -string _vhod
+    -int _pozitsiya
+    +Tokenize() : IEnumerable<Token>
+  }
+  
+  class ParserRpn {
+    +VObramnuyuPolskuyuZapis(tokens) : List<Token>
+  }
+  
+  class Evaluator {
+    +Vichislit(opz, values) : bool
+    +PoluchitPeremennie(tokens) : List<string>
+  }
+  
+  class TruthTable {
+    +List<string> Peremennie
+    +List<bool[]> Stroki
+    +List<bool> Rezultati
+    +IzNomera(n, nomer) : TruthTable
+    +IzFunktsii(opz, vars) : TruthTable
+  }
+  
+  class DnfKnfGenerator {
+    +VSDNF(table, vars) : string
+    +VSKNF(table, vars) : string
+    +PodschitatSDNF(sdnf) : tuple
+    +PodschitatSKNF(sknf) : tuple
+  }
+}
+
+package ViewModels {
+  class MainViewModel {
+    +NumberTabViewModel VkladkaPoNomeru
+    +FormulaTabViewModel VkladkaPoFormule
+    +CompareTabViewModel VkladkaSravnenie
+  }
+  
+  class NumberTabViewModel {
+    +int N
+    +string TekstNomera
+    +string TekstResultata
+    +ICommand KomandaPostroitTablitsu
+    +ICommand KomandaPostroitSDNF
+    +ICommand KomandaPostroitSKNF
+  }
+  
+  class FormulaTabViewModel {
+    +string TekstFormuli
+    +string TekstResultata
+    +ICommand KomandaPostroitTablitsu
+    +ICommand KomandaPostroitSDNF
+    +ICommand KomandaPostroitSKNF
+  }
+  
+  class CompareTabViewModel {
+    +string Formula1
+    +string Formula2
+    +string TekstResultata
+    +ICommand KomandaSravnit
+  }
+  
+  class RelayCommand {
+    +Execute(param)
+    +CanExecute(param) : bool
+  }
+}
+
+package Views {
+  class MainWindow {
+  }
+  
+  class NumberTabView {
+  }
+  
+  class FormulaTabView {
+  }
+  
+  class CompareTabView {
+  }
+  
+  class HelpTabView {
+  }
+}
+
+MainWindow --> MainViewModel
+MainWindow --> NumberTabView
+MainWindow --> FormulaTabView
+MainWindow --> CompareTabView
+MainWindow --> HelpTabView
+
+NumberTabView --> NumberTabViewModel
+FormulaTabView --> FormulaTabViewModel
+CompareTabView --> CompareTabViewModel
+
+NumberTabViewModel ..> TruthTable : uses
+NumberTabViewModel ..> DnfKnfGenerator : uses
+FormulaTabViewModel ..> Lexer : uses
+FormulaTabViewModel ..> ParserRpn : uses
+FormulaTabViewModel ..> TruthTable : uses
+FormulaTabViewModel ..> DnfKnfGenerator : uses
+CompareTabViewModel ..> Lexer : uses
+CompareTabViewModel ..> ParserRpn : uses
+CompareTabViewModel ..> Evaluator : uses
+CompareTabViewModel ..> TruthTable : uses
+
+Lexer --> Token : creates
+ParserRpn --> Token : uses
+Evaluator --> Token : uses
+TruthTable --> Evaluator : uses
+@enduml
+```
+
+## Тесты
+
+В проекте реализованы unit-тесты для основных классов модели:
+
+### LexerTests
+- Тестирование разбора простых выражений
+- Тестирование обработки скобок
+- Тестирование операторов отрицания
+- Тестирование импликации
+
+### TruthTableTests
+- Создание таблицы истинности по номеру функции
+- Создание таблицы для нулевой и единичной функций
+- Создание таблицы из логического выражения
+
+### DnfKnfGeneratorTests
+- Генерация СДНФ и СКНФ
+- Подсчет стоимости формул
+- Обработка граничных случаев (нулевая и единичная функции)
+
+Для запуска тестов:
+```
+dotnet test Lab_4_TI.Tests
+```
+
+## Технические требования
+
+- .NET 8.0
+- Windows (для WPF)
+- Visual Studio 2022 или позднее (рекомендуется)
+
+Необходимые пакеты:
+- xUnit (для тестов)
+- Microsoft.NET.Test.Sdk (для тестов)
+
+## Как запустить
+
+### Через Visual Studio
+1. Откройте файл `Lab_4_TI.sln`
+2. Нажмите F5 или кнопку "Запустить"
+
+### Через командную строку
+```
+cd Lab_4_TI
+dotnet run
+```
+
+### Сборка Release версии
+```
+dotnet build -c Release
+```
+
+Исполняемый файл будет находиться в `Lab_4_TI\bin\Release\net8.0-windows\Lab_4_TI.exe`
+
+## Примеры использования
+
+### Пример 1: Построение таблицы истинности по номеру
+- Количество переменных: **3**
+- Номер функции: **150**
+- Результат: Таблица с 8 строками (2³), показывающая значения функции для всех комбинаций входов
+
+### Пример 2: СДНФ для логического выражения
+- Формула: `x1 & x2 | !x1 & x3`
+- Результат: `(!x1 & !x2 & x3) | (x1 & x2 & !x3) | (x1 & x2 & x3)`
+- Стоимость: Литералы: 9, Конъюнкты: 3, Дизъюнкты: 2
+
+### Пример 3: Сравнение формул
+- Формула 1: `x1 -> x2`
+- Формула 2: `!x1 | x2`
+- Результат: **Формулы эквивалентны** ✓
+
+### Пример 4: XOR через базисные операции
+- Формула: `x1 ^ x2`
+- Программа автоматически преобразует в: `(x1 & !x2) | (!x1 & x2)`
+
+## Автор
+
+Лабораторная работа по курсу "Теория информации"

@@ -1,0 +1,78 @@
+<UserControl x:Class="Lab_4_TI.Views.HelpTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+        <StackPanel>
+            <TextBlock Text="Справка по приложению" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+            
+            <TextBlock Text="О программе" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,20">
+                Это приложение для работы с логическими функциями. Оно позволяет строить таблицы истинности,
+                вычислять СДНФ и СКНФ, а также сравнивать логические выражения.
+            </TextBlock>
+            
+            <TextBlock Text="Вкладка 'По номеру'" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,20">
+                На этой вкладке вы можете ввести количество переменных (от 1 до 20) и номер функции.
+                Программа построит таблицу истинности и вычислит СДНФ и СКНФ для заданной функции.
+                Также отображается стоимость каждой формы (количество литералов, конъюнкций и дизъюнкций).
+            </TextBlock>
+            
+            <TextBlock Text="Вкладка 'По формуле'" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,15">
+                Здесь можно ввести логическое выражение и получить его таблицу истинности, СДНФ и СКНФ.
+            </TextBlock>
+            <TextBlock Text="Поддерживаемые операции:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • ! или NOT - отрицание (НЕ)
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • &amp; или AND - конъюнкция (И)
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • | или OR - дизъюнкция (ИЛИ)
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • ^ или XOR - исключающее ИЛИ
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • -> - импликация
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,20">
+                • = - эквивалентность
+            </TextBlock>
+            
+            <TextBlock Text="Вкладка 'Сравнение'" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,20">
+                На этой вкладке можно сравнить две логические формулы и проверить, являются ли они эквивалентными.
+                Программа построит таблицы истинности для обеих формул и покажет, совпадают ли результаты.
+            </TextBlock>
+            
+            <TextBlock Text="Примеры формул:" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • x1 &amp; x2
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • !x1 | x2
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • (x1 | x2) &amp; !x3
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
+                • x1 -> x2
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="20,0,0,20">
+                • (x1 &amp; x2) = (x3 | x4)
+            </TextBlock>
+            
+            <TextBlock Text="Автор" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap">
+                Лабораторная работа №4 по теории информации
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

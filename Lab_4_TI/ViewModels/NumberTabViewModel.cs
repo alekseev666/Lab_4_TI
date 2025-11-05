@@ -8,12 +8,19 @@ using Lab_4_TI.Models;
 
 namespace Lab_4_TI.ViewModels
 {
+    /// <summary>
+    /// Модель представления для вкладки "По номеру"
+    /// </summary>
     public class NumberTabViewModel : INotifyPropertyChanged
     {
+        // Поля для хранения даных
         private int _n = 3;
         private string _tekstNomera = "11";
         private string _resultat = string.Empty;
 
+        /// <summary>
+        /// Количество переменых в функции
+        /// </summary>
         public int N
         {
             get => _n;
@@ -38,6 +45,9 @@ namespace Lab_4_TI.ViewModels
         public ICommand KomandaSkopirovat => new RelayCommand(_ => SkopirovatVBufer());
         public ICommand KomandaPreset1 => new RelayCommand(_ => ZagruzitPreset1());
 
+        /// <summary>
+        /// Предупреждение при большом количестве переменых
+        /// </summary>
         private void PredupreditOBolshomRazmere()
         {
             if (N >= 12)
@@ -46,6 +56,7 @@ namespace Lab_4_TI.ViewModels
             }
         }
 
+        // Построение таблицы истинности
         private void PostroitTablitsu()
         {
             try
@@ -72,6 +83,7 @@ namespace Lab_4_TI.ViewModels
             }
         }
 
+        // Построение СДНФ
         private void PostroitSDNF()
         {
             try
@@ -97,6 +109,7 @@ namespace Lab_4_TI.ViewModels
             }
         }
 
+        // Построение СКНФ
         private void PostroitSKNF()
         {
             try

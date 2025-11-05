@@ -26,17 +26,20 @@ namespace Lab_4_TI.Models
         /// </summary>
         public static TruthTable IzNomera(int n, ulong nomer)
         {
+            // Проверка диапазона
             if (n < 1 || n > 20)
-                throw new ArgumentException("n должен быть между 1 и 20");
+                throw new ArgumentException("н должен быть между 1 и 20");
 
             ulong maksimalniyNomer = (1UL << (1 << n)) - 1;
             if (nomer > maksimalniyNomer)
                 throw new ArgumentException($"Номер должен быть между 0 и {maksimalniyNomer}");
 
+            // Создаем переменые x1, x2, x3...
             var peremennie = Enumerable.Range(1, n).Select(i => $"x{i}").ToList();
             var stroki = SgenerirovatVseStroki(n);
             var rezultati = new List<bool>();
 
+            // Вычисляем результаты из номера функции
             for (int i = 0; i < stroki.Count; i++)
             {
                 bool znachenie = ((nomer >> i) & 1) == 1;
@@ -51,9 +54,11 @@ namespace Lab_4_TI.Models
         /// </summary>
         public static TruthTable IzFunktsii(List<Token> obramnayaZapis, List<string> peremennie)
         {
+            // Генерируем все комбинации значений
             var stroki = SgenerirovatVseStroki(peremennie.Count);
             var rezultati = new List<bool>();
 
+            // Вычисляем функцию для каждой строки
             foreach (var stroka in stroki)
             {
                 var znacheniyaPeremennih = new Dictionary<string, bool>();
@@ -69,6 +74,9 @@ namespace Lab_4_TI.Models
             return new TruthTable(peremennie, stroki, rezultati);
         }
 
+        /// <summary>
+        /// Генерирует все возможные комбинации значений переменых
+        /// </summary>
         private static List<bool[]> SgenerirovatVseStroki(int kolichestvoPeremennih)
         {
             int kolichestvoStrok = 1 << kolichestvoPeremennih;

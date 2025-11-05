@@ -25,16 +25,19 @@ namespace Lab_4_TI.Models
         /// </summary>
         public IEnumerable<Token> Tokenize()
         {
+            // Проходим по всей строке
             while (_pozitsiya < _vhod.Length)
             {
                 char tekushiy = _vhod[_pozitsiya];
 
+                // Пропускаем пробелы
                 if (char.IsWhiteSpace(tekushiy))
                 {
                     _pozitsiya++;
                     continue;
                 }
 
+                // Если буква - это идентификатор
                 if (char.IsLetter(tekushiy))
                 {
                     string identifikator = ProchitatIdentifikator();
@@ -42,6 +45,7 @@ namespace Lab_4_TI.Models
                     continue;
                 }
 
+                // Обрабатываем операторы
                 switch (tekushiy)
                 {
                     case '(':
@@ -89,6 +93,9 @@ namespace Lab_4_TI.Models
             }
         }
 
+        /// <summary>
+        /// Читает идентификатор (буквы, цифры, подчеркивание)
+        /// </summary>
         private string ProchitatIdentifikator()
         {
             var resultat = new StringBuilder();
@@ -100,6 +107,9 @@ namespace Lab_4_TI.Models
             return resultat.ToString();
         }
 
+        /// <summary>
+        /// Преобразует идентификатор в токен
+        /// </summary>
         private Token IdentifikatorVToken(string identifikator)
         {
             return identifikator.ToLower() switch

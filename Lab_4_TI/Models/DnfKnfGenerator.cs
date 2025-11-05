@@ -19,6 +19,7 @@ namespace Lab_4_TI.Models
 
             for (int i = 0; i < tablitsa.Stroki.Count; i++)
             {
+                // Для СДНФ берем строки где результат = 1
                 if (tablitsa.Rezultati[i])
                 {
                     var literali = new List<string>();
@@ -41,8 +42,10 @@ namespace Lab_4_TI.Models
         {
             var klauzi = new List<string>();
 
+            // Проходим по таблице
             for (int i = 0; i < tablitsa.Stroki.Count; i++)
             {
+                // Для СКНФ берем строки где результат = 0
                 if (!tablitsa.Rezultati[i])
                 {
                     var literali = new List<string>();
@@ -69,6 +72,7 @@ namespace Lab_4_TI.Models
             int konYunktsii = termini.Length;
             int disYunktsii = Math.Max(0, termini.Length - 1);
 
+            // Подсчет литералов
             int literali = 0;
             foreach (var termin in termini)
             {
