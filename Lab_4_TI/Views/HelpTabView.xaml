@@ -52,6 +52,28 @@
                 Программа построит таблицы истинности для обеих формул и покажет, совпадают ли результаты.
             </TextBlock>
             
+            <TextBlock Text="Что такое СДНФ и СКНФ?" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            
+            <TextBlock Text="СДНФ (Совершенная Дизъюнктивная Нормальная Форма)" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                Это форма представления логической функции в виде дизъюнкции (ИЛИ) конъюнкций (И).
+                Каждая конъюнкция содержит все переменные или их отрицания. СДНФ строится по строкам таблицы истинности,
+                где функция равна 1.
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,15" FontStyle="Italic">
+                Пример: (!x1 &amp; !x2) | (!x1 &amp; x2) | (x1 &amp; x2)
+            </TextBlock>
+            
+            <TextBlock Text="СКНФ (Совершенная Конъюнктивная Нормальная Форма)" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                Это форма представления логической функции в виде конъюнкции (И) дизъюнкций (ИЛИ).
+                Каждая дизъюнкция содержит все переменные или их отрицания. СКНФ строится по строкам таблицы истинности,
+                где функция равна 0.
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,20" FontStyle="Italic">
+                Пример: (x1 | x2) &amp; (x1 | !x2) &amp; (!x1 | x2)
+            </TextBlock>
+            
             <TextBlock Text="Примеры формул:" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,10"/>
             <TextBlock TextWrapping="Wrap" Margin="20,0,0,5">
                 • x1 &amp; x2
