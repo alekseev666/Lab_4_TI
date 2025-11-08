@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -62,7 +63,7 @@ namespace Lab_4_TI.ViewModels
             try
             {
                 PredupreditOBolshomRazmere();
-                if (!ulong.TryParse(TekstNomera, out ulong nomer))
+                if (!BigInteger.TryParse(TekstNomera, out BigInteger nomer))
                 {
                     TekstResultata = "Неверный формат номера";
                     return;
@@ -74,7 +75,7 @@ namespace Lab_4_TI.ViewModels
                 TekstResultata = $"Таблица истинности (n={N}, номер={nomer}):\n\n";
                 TekstResultata += TruthTable.TablitsaVStroku(tablitsa, peremennie);
 
-                TekstResultata += $"\nПояснение: номер={nomer} в двоичной системе: {Convert.ToString((long)nomer, 2).PadLeft(1 << N, '0')}\n";
+                TekstResultata += $"\nПояснение: номер={nomer} в двоичной системе: {KVDvoichnoy(nomer, 1 << N)}\n";
                 TekstResultata += "Биты соответствуют значениям функции на кортежах в порядке возрастания\n";
             }
             catch (Exception ex)
@@ -89,7 +90,7 @@ namespace Lab_4_TI.ViewModels
             try
             {
                 PredupreditOBolshomRazmere();
-                if (!ulong.TryParse(TekstNomera, out ulong nomer))
+                if (!BigInteger.TryParse(TekstNomera, out BigInteger nomer))
                 {
                     TekstResultata = "Неверный формат номера";
                     return;
@@ -115,7 +116,7 @@ namespace Lab_4_TI.ViewModels
             try
             {
                 PredupreditOBolshomRazmere();
-                if (!ulong.TryParse(TekstNomera, out ulong nomer))
+                if (!BigInteger.TryParse(TekstNomera, out BigInteger nomer))
                 {
                     TekstResultata = "Неверный формат номера";
                     return;
@@ -133,6 +134,22 @@ namespace Lab_4_TI.ViewModels
             {
                 TekstResultata = $"Ошибка: {ex.Message}";
             }
+        }
+
+        private static string KVDvoichnoy(BigInteger value, int width)
+        {
+            if (value < 0)
+            {
+                return "-" + KVDvoichnoy(BigInteger.Negate(value), width);
+            }
+
+            var chars = new char[width];
+            for (int i = 0; i < width; i++)
+            {
+                bool bit = ((value >> i) & BigInteger.One) == BigInteger.One;
+                chars[width - 1 - i] = bit ? '1' : '0';
+            }
+            return new string(chars);
         }
 
         private void SkopirovatVBufer()

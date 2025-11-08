@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace Lab_4_TI.Models
@@ -22,17 +23,26 @@ namespace Lab_4_TI.Models
         }
 
         /// <summary>
-        /// Создает таблицу истинности по номеру функции
+        /// Создает таблицу истинности по номеру функции (перегрузка для ulong)
         /// </summary>
         public static TruthTable IzNomera(int n, ulong nomer)
         {
-            // Проверка диапазона
-            if (n < 1 || n > 20)
-                throw new ArgumentException("н должен быть между 1 и 20");
+            return IzNomera(n, new BigInteger(nomer));
+        }
 
-            ulong maksimalniyNomer = (1UL << (1 << n)) - 1;
-            if (nomer > maksimalniyNomer)
-                throw new ArgumentException($"Номер должен быть между 0 и {maksimalniyNomer}");
+        /// <summary>
+        /// Создает таблицу истинности по номеру функции (BigInteger)
+        /// </summary>
+        public static TruthTable IzNomera(int n, BigInteger nomer)
+        {
+            // Проверка диапазона n
+            if (n < 1 || n > 20)
+                throw new ArgumentException("n должен быть между 1 и 20");
+
+            // Проверка границ без построения огромного "максимального" числа
+            int dlinaVektora = 1 << n; // 2^n (для n<=20 помещается в int)
+            if (nomer < BigInteger.Zero || (nomer >> dlinaVektora) != BigInteger.Zero)
+                throw new ArgumentException($"Номер вне диапазона: допустимы значения от 0 до 2^(2^n)-1. Для n={n} допускается не более {dlinaVektora} бит в двоичном представлении номера.");
 
             // Создаем переменые x1, x2, x3...
             var peremennie = Enumerable.Range(1, n).Select(i => $"x{i}").ToList();
@@ -42,7 +52,7 @@ namespace Lab_4_TI.Models
             // Вычисляем результаты из номера функции
             for (int i = 0; i < stroki.Count; i++)
             {
-                bool znachenie = ((nomer >> i) & 1) == 1;
+                bool znachenie = ((nomer >> i) & BigInteger.One) == BigInteger.One;
                 rezultati.Add(znachenie);
             }
 
