@@ -44,31 +44,6 @@
 
 <img width="1700" height="1075" alt="pPPVJzim5CNVyodyM3H0sXxHL26DibM5hcehDcsQaDjSm8fZH_vJQ17VVNRir4rkIxMtIK2mpoy-vrx7JI-reShOacSLNHRq4SYjp85hyfeHikHKQpAN1OXwJCY7UZ1VLq3ch0fJsYWc7iaS2ctSp9lxTJyWR4aI7MwVW88IXA1hMe_7K5-6uIzdzVMdL65SLfmLr6WMwK6nOYlAGHWXjQcdRc15PuLS586" src="https://github.com/user-attachments/assets/b5f96512-9d1d-4824-bb13-039c52f11ad3" />
 
-## Тесты
-
-В проекте реализованы unit-тесты для основных классов модели:
-
-### LexerTests
-- Тестирование разбора простых выражений
-- Тестирование обработки скобок
-- Тестирование операторов отрицания
-- Тестирование импликации
-
-### TruthTableTests
-- Создание таблицы истинности по номеру функции
-- Создание таблицы для нулевой и единичной функций
-- Создание таблицы из логического выражения
-
-### DnfKnfGeneratorTests
-- Генерация СДНФ и СКНФ
-- Подсчет стоимости формул
-- Обработка граничных случаев (нулевая и единичная функции)
-
-Для запуска тестов:
-```
-dotnet test Lab_4_TI.Tests
-```
-
 ## Технические требования
 
 - .NET 8.0
