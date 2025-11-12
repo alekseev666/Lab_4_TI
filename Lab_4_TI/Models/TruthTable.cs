@@ -36,20 +36,20 @@ namespace Lab_4_TI.Models
         public static TruthTable IzNomera(int n, BigInteger nomer)
         {
             // Проверка диапазона n
-            if (n < 1 || n > 20)
-                throw new ArgumentException("n должен быть между 1 и 20");
+            if (n < 1 || n > 12)
+                throw new ArgumentException("n должен быть между 1 и 12");
 
-            // Проверка границ без построения огромного "максимального" числа
-            int dlinaVektora = 1 << n; // 2^n (для n<=20 помещается в int)
+            
+            int dlinaVektora = 1 << n; 
             if (nomer < BigInteger.Zero || (nomer >> dlinaVektora) != BigInteger.Zero)
                 throw new ArgumentException($"Номер вне диапазона: допустимы значения от 0 до 2^(2^n)-1. Для n={n} допускается не более {dlinaVektora} бит в двоичном представлении номера.");
 
-            // Создаем переменые x1, x2, x3...
+           
             var peremennie = Enumerable.Range(1, n).Select(i => $"x{i}").ToList();
             var stroki = SgenerirovatVseStroki(n);
             var rezultati = new List<bool>();
 
-            // Вычисляем результаты из номера функции
+          
             for (int i = 0; i < stroki.Count; i++)
             {
                 bool znachenie = ((nomer >> i) & BigInteger.One) == BigInteger.One;
